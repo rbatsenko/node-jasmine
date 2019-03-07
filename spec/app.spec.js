@@ -1,7 +1,20 @@
-const Add = require('../app');
+const Request = require('request');
 
-describe('Add functionality', () => {
-  it('calculate x + y = z', () => {
-    expect(Add(5, 10)).toBe(15);
+describe('Server', () => {
+  let server;
+  beforeAll(() => {
+    server = require('../app');
+  });
+  afterAll(() => {
+    server.close();
+  });
+  describe('GET /', () => {
+    let data = {};
+    beforeAll(() => {
+      Request.get('http://localhost:3000/', (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+      })
+    })
   });
 });
